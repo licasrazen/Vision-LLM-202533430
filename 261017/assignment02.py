@@ -27,7 +27,7 @@ mask_enhanced = cv2.inRange(basketball_enhanced_lab, lower_basketball_lab, upper
 
 
 
-basketball = cv2.imread('src/images/basketball_crop.jpg')
+basketball = cv2.imread('../src/images/basketball_crop.jpg')
 
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
 
