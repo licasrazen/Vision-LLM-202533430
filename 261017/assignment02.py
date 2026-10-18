@@ -6,7 +6,7 @@ import skimage.data
 lower_basketball_lab = np.array([70, 130, 70])
 upper_basketball_lab = np.array([180, 230, 185])
 
-basketball = cv2.imread('src/images/basketball_crop.jpg')
+basketball = cv2.imread('../src/images/basketball_crop.jpg')
 
 # TODO: LAB 색공간으로 변환
 basketball_lab = cv2.cvtColor(basketball, cv2.COLOR_BGR2LAB)
@@ -72,3 +72,4 @@ if len(contours) > 0:
 
 plt.imshow(img_final)
 plt.axis("off");
+plt.show()
