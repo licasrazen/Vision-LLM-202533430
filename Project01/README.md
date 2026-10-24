@@ -2,8 +2,8 @@
 
 ## 파일 구조 (필수)
 
-- **mathaudio_jetson.py**: ...
-- **mathaudio_win.py**: ...
+- **mathaudio_jetson.py**: 젯슨 실행용
+- **mathaudio_win.py**: 노트북 웹캠용
 
 <br>
 
@@ -32,6 +32,8 @@ pip install absl-py flatbuffers sounddevice
 wget https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task -O src/models/MediaPipe/hand_landmarker.task
 
 wget https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/latest/pose_landmarker_full.task -O src/models/MediaPipe/pose_landmarker_full.task
+
+pip install sounddevice
 
 설치하고 실행
 
