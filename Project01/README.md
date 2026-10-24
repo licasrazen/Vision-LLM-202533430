@@ -8,9 +8,10 @@
 <br>
 
 ## 실행 방식 (필수)
+<br>
 버전 정보
 mediapipe 1.1.1
-
+<br>
 가상환경에서 실행할 경우
 py -3.10 -m venv --system-site-packages .venv
 
@@ -21,9 +22,9 @@ python -m pip install --upgrade pip
 python -m pip install jupyter ipykernel
 
 python -m ipykernel install --user --name=vision_llm --display-name "Vision-LLM (Python3.10)"
-
+<br>
 설치 패키지 목록
-
+<br>
 python -m pip install --upgrade pip setuptools wheel pip uninstall matplotlib-inline pip install "matplotlib-inline<0.2" pip install --no-deps \     scikit-image==0.19.3 \     imageio==2.19.3 \     tifffile==2022.5.4 \     PyWavelets==1.3.0 \     networkx==2.8.8
 
 mkdir -p src/models/MediaPipe
@@ -34,10 +35,18 @@ pip install absl-py flatbuffers sounddevice
 wget https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task -O src/models/MediaPipe/hand_landmarker.task
 
 wget https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/latest/pose_landmarker_full.task -O src/models/MediaPipe/pose_landmarker_full.task
-
-pip install sounddevice
-
+<br>
 설치하고 실행
+<br>
+파이프라인
+
+ "nvarguscamerasrc sensor-id=0 ! "
+    "video/x-raw(memory:NVMM), width=1280, height=720, framerate=30/1 ! "
+    "nvvidconv ! "
+    "video/x-raw, format=BGRx ! "
+    "videoconvert ! "
+    "video/x-raw, format=BGR ! "
+    "appsink"
 
 <br>
 
