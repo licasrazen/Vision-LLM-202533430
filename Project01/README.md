@@ -8,6 +8,8 @@
 <br>
 
 ## 실행 방식 (필수)
+버전 정보
+mediapipe 1.1.1
 
 가상환경에서 실행할 경우
 py -3.10 -m venv --system-site-packages .venv
