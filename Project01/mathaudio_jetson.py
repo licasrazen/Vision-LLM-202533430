@@ -330,9 +330,8 @@ def draw_corner_marks(img, x, y, w, h, size=12, color=BLUE):
 # =========================================================
 
 pipeline = (
-    f"v4l2src device={CAMERA_DEVICE} ! "
-    f"image/jpeg,width={CAMERA_WIDTH},height={CAMERA_HEIGHT},"
-    f"framerate={CAMERA_FPS}/1 ! "
+    "v4l2src device=/dev/video0 ! "
+    "image/jpeg,width=1280,height=720,framerate=30/1 ! "
     "jpegdec ! videoconvert ! video/x-raw,format=BGR ! "
     "queue leaky=downstream max-size-buffers=1 "
     "max-size-bytes=0 max-size-time=0 ! "
