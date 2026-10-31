@@ -38,7 +38,7 @@ python assignment03_2.py
 
 
 ## 기타 참고 사항
-###**assignment03_1.py**
+**assignment03_1.py**
 **1. GPU 가속 (잔상효과, Convolution2D)**
 NumPy를 사용하여 잔상 효과 함수 정의: np.zeros()와 np.zeros_like()를 통해 이미지와 동일한 크기의 0 배열을 생성하여 오른쪽으로 shift 픽셀만큼 이동하고, 거리별 가중치를 곱하여 결과 배열에 누적하였습니다.
 
@@ -59,7 +59,7 @@ main_gpu 함수를 이용하여 MNIST 데이터셋을 불러오고 DataLoader를
 **3. CIFAR-10 데이터셋 모델 학습 파트 + 저장한 모델 파일 (.pth)**
 CIFAR-10 데이터셋을 이용하여 10개 클래스의 이미지 분류 CNN 모델을 구현하였습니다. Random Crop과 Random Horizontal Flip을 적용하여 학습 데이터를 증강하고, 5 Epoch 동안 모델을 학습 및 평가하였습니다. 학습 시간과 Loss 및 Accuracy를 측정하고, 학습된 모델을 .pth 파일로 저장하였습니다.
 
-###**assignment03_2.py**
+**assignment03_2.py**
 **1. IoU 구현**
 OpenCV의 `boundingRect()`를 활용하여 BBox 좌표를 `(x, y, w, h)`에서 `(x1, y1, x2, y2)` 형식으로 변환하였습니다. 두 BBox의 교집합 및 합집합 면적을 계산하여 IoU를 산출하였습니다. 허블 딥 필드 이미지를 활용하여 랜덤한 위치와 크기의 BBox 및 신뢰도 점수를 생성하였습니다. Confidence Thresholding을 구현하여 설정한 임계값보다 낮은 신뢰도 점수를 가진 BBox를 제거하였습니다. BBox와 신뢰도 점수를 이미지에 시각화하여 결과를 확인하였습니다.
 
