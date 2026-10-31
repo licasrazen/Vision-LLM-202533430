@@ -4,6 +4,7 @@
 
 - **assignment03_1.py**: NumPy와 CuPy를 이용한 CPU/GPU 연산 시간 비교 및 PyTorch 기반 MNIST, CIFAR-10 CNN 모델 학습
 - **assignment03_2.py**: Bounding Box 좌표 변환, IoU 계산, Confidence Thresholding 및 NMS(Non-Maximum Suppression) 구현
+- **CIFAR10_CNN.pth**: 과제 assignment03_1.py를 실행하면 나오는 파일
 
 ## 실행 방식 (필수)
 
@@ -37,42 +38,30 @@ python assignment03_2.py
 
 
 ## 기타 참고 사항
-1. CNN 모델 구현
+###**assignment03_1.py**
+**1. GPU 가속 (잔상효과, Convolution2D)**
+NumPy를 사용하여 잔상 효과 함수 정의: np.zeros()와 np.zeros_like()를 통해 이미지와 동일한 크기의 0 배열을 생성하여 오른쪽으로 shift 픽셀만큼 이동하고, 거리별 가중치를 곱하여 결과 배열에 누적하였습니다.
 
-MNIST 데이터셋을 이용하여 손글씨 숫자 0~9를 분류하는 CNN 모델을 구현하였습니다.
+CuPy를 사용하여 잔상 효과 함수 정의: np만 cp로 바꾸었습니다.
 
-CIFAR-10 데이터셋을 이용하여 10개 클래스를 분류하는 CNN 모델을 구현하였습니다.
+2차원 Convolution (CPU 버전): convolution2d 함수를 이용하여 입력 이미지에 커널을 적용하고, 이미지 영역과 커널의 합성곱을 통해 2차원 Convolution 연산을 구현하였습니다.
 
-MNIST 모델은 두 개의 Convolution 계층과 Max Pooling 계층을 사용하였으며, CIFAR-10 모델은 ConvBlock과 Batch Normalization, Dropout을 적용하였습니다.
+CuPy를 사용하여 2차원 convolution 함수 정의: 역시 np만 cp로 바꾸었습니다.
 
-CIFAR-10 학습 과정에서 Random Crop과 Random Horizontal Flip을 적용하여 데이터 증강을 수행하였습니다.
+x, y방향 경계선 필터를 만들고 잔상 효과와 컨볼루션2D의 연산을 비교하였습니다. 
 
-CrossEntropyLoss를 손실 함수로 사용하고, MNIST에는 Adam, CIFAR-10에는 AdamW Optimizer를 적용하였습니다.
+**2. MNIST 데이터셋 main_gpu() 함수 및 모델 구현**
+클래스 SimpleCNN을 이용해 CNN 모델을 정의하고, 최종적으로 추출한 특징을 10개 숫자 클래스(0~9)로 분류했습니다. 그리고 train_one_epoch로 학습 데이터를 입력하고, 가중치를 업데이트 했습니다. evaluate로는 평가 데이터를 입력해서 정답을 비교하고 손실과 정확도를 계산했습니다.
 
-학습 및 평가 과정에서 Loss와 Accuracy를 계산하였습니다.
+main_gpu 함수를 이용하여 MNIST 데이터셋을 불러오고 DataLoader를 통해 학습 및 테스트 데이터를 배치 단위로 구성하였습니다. CUDA 사용 가능 여부에 따라 CPU 또는 GPU를 선택하고, CNN 모델을 Adam 최적화 알고리즘과 CrossEntropyLoss를 이용하여 학습하였습니다. 에포크별 Loss, Accuracy 및 전체 학습 시간을 측정하였습니다.
 
-2. CPU 및 GPU 연산 비교
 
-NumPy와 CuPy를 이용하여 Motion Trail 연산을 각각 구현하고 실행 시간을 비교하였습니다.
+**3. CIFAR-10 데이터셋 모델 학습 파트 + 저장한 모델 파일 (.pth)**
+CIFAR-10 데이터셋을 이용하여 10개 클래스의 이미지 분류 CNN 모델을 구현하였습니다. Random Crop과 Random Horizontal Flip을 적용하여 학습 데이터를 증강하고, 5 Epoch 동안 모델을 학습 및 평가하였습니다. 학습 시간과 Loss 및 Accuracy를 측정하고, 학습된 모델을 .pth 파일로 저장하였습니다.
 
-2D Convolution 연산을 CPU와 GPU 환경에서 수행하고 실행 시간을 측정하였습니다.
+###**assignment03_2.py**
+**1. IoU 구현**
+OpenCV의 `boundingRect()`를 활용하여 BBox 좌표를 `(x, y, w, h)`에서 `(x1, y1, x2, y2)` 형식으로 변환하였습니다. 두 BBox의 교집합 및 합집합 면적을 계산하여 IoU를 산출하였습니다. 허블 딥 필드 이미지를 활용하여 랜덤한 위치와 크기의 BBox 및 신뢰도 점수를 생성하였습니다. Confidence Thresholding을 구현하여 설정한 임계값보다 낮은 신뢰도 점수를 가진 BBox를 제거하였습니다. BBox와 신뢰도 점수를 이미지에 시각화하여 결과를 확인하였습니다.
 
-GPU 연산 시간 측정 시 CUDA 동기화를 적용하여 비동기 실행에 따른 측정 오차를 줄이고자 하였습니다.
-
-3. 객체 탐지 알고리즘 구현
-
-Bounding Box 좌표를 (x, y, w, h) 형식에서 (x1, y1, x2, y2) 형식으로 변환하였습니다.
-
-두 Bounding Box의 교집합과 합집합을 이용하여 IoU를 계산하였습니다.
-
-Confidence Thresholding을 적용하여 기준 점수보다 낮은 Bounding Box를 제거하였습니다.
-
-NMS를 통해 Confidence Score가 높은 Bounding Box를 우선적으로 유지하고, 중복되는 Bounding Box를 제거하였습니다.
-
-4. 추가 설명
-
-PyTorch 모델은 CUDA 사용 가능 여부에 따라 GPU 또는 CPU를 선택하여 학습하도록 구현하였습니다.
-
-CIFAR-10 학습이 완료되면 모델 가중치, Optimizer 상태, 테스트 정확도 및 클래스 정보를 저장하도록 구현하였습니다.
-
-MNIST 모델은 학습 및 평가를 수행하지만 별도의 모델 파일 저장 기능은 구현하지 않았습니다.
+ **2. NMS 구현**
+ 신뢰도 점수를 내림차순으로 정렬하고, 최고 점수 BBox를 선택했습니다. IoU 비교를 통한 중복 BBox는 NMS로 제거하고, 적용 전후 Bounding Box 개수 및 결과를 시각화하였습니다.
