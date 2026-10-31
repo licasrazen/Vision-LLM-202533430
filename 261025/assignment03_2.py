@@ -4,7 +4,45 @@ import matplotlib.pyplot as plt
 import skimage.data
 from random import randint, gauss
 
-# IoU 구현
+#아래 get_contour를 위해 넣어줌
+def get_contour(img_bgr):
+    red_lower1 = np.array([0, 100, 50])
+    red_upper1 = np.array([10, 255, 255])
+    red_lower2 = np.array([170, 100, 50])
+    red_upper2 = np.array([180, 255, 255])
+    green_lower = np.array([25, 10, 30])
+    green_upper = np.array([100, 255, 255])
+
+    img_blr = cv2.GaussianBlur(img_bgr, (7, 7), 0)
+    blr_hsv = cv2.cvtColor(img_blr, cv2.COLOR_BGR2HSV)
+
+    red_mask1 = cv2.inRange(blr_hsv, red_lower1, red_upper1)
+    red_mask2 = cv2.inRange(blr_hsv, red_lower2, red_upper2)
+    red_mask = cv2.bitwise_or(red_mask1, red_mask2)
+    grn_mask = cv2.inRange(blr_hsv, green_lower, green_upper)
+
+    contours_red, _ = cv2.findContours(red_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours_grn, _ = cv2.findContours(grn_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    cntr_red, cntr_grn = None, None
+
+    if len(contours_red) > 0:
+        cntr_red = max(contours_red, key=cv2.contourArea)
+    if len(contours_grn) > 0:
+        cntr_grn = max(contours_grn, key=cv2.contourArea)
+
+    return cntr_red, cntr_grn
+
+#아래 draw_bbox를 위해 넣어줌
+def draw_bbox(img, coord1, coord2, color, thickness=3, txt=""):
+    _, txt_h = cv2.getTextSize(txt, cv2.FONT_HERSHEY_SIMPLEX, 0.8, 2)[0]
+    cv2.rectangle(img, coord1, coord2, color, thickness)
+    cv2.putText(img, txt, (coord1[0], coord1[1]-txt_h+15), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
+
+# ==============================================================================
+# 1. IoU 구현
+# ==============================================================================
+
 
 # TODO: 1) BBox 좌표를 (x,y,w,h)에서 (x1,y1,x2,y2)로 변환하는 함수 정의
 # TODO: 2) IoU 계산 함수 정의
@@ -18,18 +56,18 @@ def calculate_iou(bbox_a, bbox_b):
     xa_1, ya_1, xa_2, ya_2 = bbox_a
     xb_1, yb_1, xb_2, yb_2 = bbox_b
 
-    intersection_x1 = max(xa_1, xb_1)
+    intersection_x1 = max(xa_1, xb_1)   #교집합 좌표 구하기
     intersection_y1 = max(ya_1, yb_1)
     intersection_x2 = min(xa_2, xb_2)
     intersection_y2 = min(ya_2, yb_2)
 
-    w = max(0, intersection_x2 - intersection_x1)
+    w = max(0, intersection_x2 - intersection_x1)   #교집합 면적 구하기
     h = max(0, intersection_y2 - intersection_y1)
     intersection_area = w * h
 
-    area_a = max(0, xa_2 - xa_1) * max(0, ya_2 - ya_1)
+    area_a = max(0, xa_2 - xa_1) * max(0, ya_2 - ya_1)   #각 박스의 면적
     area_b = max(0, xb_2 - xb_1) * max(0, yb_2 - yb_1)
-    union_area = area_a + area_b - intersection_area
+    union_area = area_a + area_b - intersection_area   #합집합 면적
 
     # TODO: ZeroDivisionError 주의
     if union_area == 0:
@@ -151,11 +189,16 @@ def prune_low_conf(boxes, scores, conf_threshold=0.5):
     return pruned_boxes, pruned_scores
 
 
+# ==============================================================================
+# 2. NMS 구현
+# ==============================================================================
+
+
 # TODO: NMS 함수 정의
 # TODO: np.sort() 함수를 사용하면 1차원 배열을 정렬
 # TODO: np.argsort() 함수를 사용하면 1차원 배열의 정렬된 인덱스를 반환
 
-# NMS 구현
+
 def apply_nms(boxes, scores, iou_threshold=0.5):
     """
     NMS 적용

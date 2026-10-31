@@ -6,17 +6,18 @@ import time
 import numpy as np
 import cupy as cp
 
-IMAGE_PATH = "src/images/seagull.jpg"
+IMAGE_PATH = "../src/images/seagull.jpg"
 TARGET_WIDTH = 1280
 TARGET_HEIGHT = 720
 TRAIL_LENGTH = 32
 
-# NumPy를 사용하여 잔상 효과 함수 정의
+# TODO: NumPy를 사용하여 잔상 효과 함수 정의
 def motion_trail_np(image, weights):
     """
     NumPy를 이용해 이미지 잔상 효과를 생성한다.
     출력 픽셀을 Python 반복문으로 하나씩 계산한다.
     """
+    # TODO: 필요한 변수 정의 및 출력 배열 생성
     height, width = image.shape
     output = np.zeros((height, width), dtype=np.float32)
 
@@ -26,19 +27,22 @@ def motion_trail_np(image, weights):
             output += image * weight
         else:
             # 오른쪽으로 shift 픽셀만큼 이동
+            # TODO: x값 shift
             shifted_image = np.zeros_like(image)
             shifted_image[:, shift:] = image[:, :-shift]
+            # TODO: shift한 픽셀을 누적하고 출력 배열에 저장
             output += shifted_image * weight
 
     return output
 
-# CuPy를 사용하여 잔상 효과 함수 정의 (TODO 구현 포함)
+# TODO: CuPy를 사용하여 잔상 효과 함수 정의 
 def motion_trail_cp(image, weights):
     """
     CuPy를 이용해 이미지 잔상 효과를 생성한다.
     이동 거리는 Python에서 순차적으로 반복하지만,
     각 이동 거리의 이미지 전체 계산은 GPU에서 병렬 처리한다.
     """
+    # TODO: 필요한 변수 정의 및 출력 배열 생성
     height, width = image.shape
     output = cp.zeros((height, width), dtype=cp.float32)
 
@@ -47,8 +51,10 @@ def motion_trail_cp(image, weights):
         if shift == 0:
             output += image * weight
         else:
+            # TODO: 배열 slicing
             shifted_image = cp.zeros_like(image)
             shifted_image[:, shift:] = image[:, :-shift]
+            # TODO: GPU가 병렬 연산할 output_region 계산 코드
             output += shifted_image * weight
 
     return output
@@ -57,22 +63,22 @@ def motion_trail_cp(image, weights):
 def convolution2d(image, kernel, bias=0.0, stride=1, padding=0):
     h, w = image.shape
     kh, kw = kernel.shape
-    out_h = (h - kh + 2 * padding) // stride + 1
+    out_h = (h - kh + 2 * padding) // stride + 1  #출력 크기 계산
     out_w = (w - kw + 2 * padding) // stride + 1
     
-    if padding > 0:
+    if padding > 0:   #패딩 추가
         padded = np.pad(image, ((padding, padding), (padding, padding)), mode='constant')
     else:
         padded = image
 
-    output = np.zeros((out_h, out_w), dtype=np.float32)
+    output = np.zeros((out_h, out_w), dtype=np.float32)   #출력 배열 생성
     for i in range(out_h):
         for j in range(out_w):
-            region = padded[i*stride:i*stride+kh, j*stride:j*stride+kw]
-            output[i, j] = np.sum(region * kernel) + bias
+            region = padded[i*stride:i*stride+kh, j*stride:j*stride+kw]   #이미지 영역 추출
+            output[i, j] = np.sum(region * kernel) + bias  #합성곱 계산
     return output
 
-# CuPy를 사용하여 2차원 convolution 함수 정의 (TODO 구현 완료)
+# TODO: CuPy를 사용하여 2차원 convolution 함수 정의
 def convolution2d_cp(image, kernel, bias=0.0, stride=1, padding=0):
     """
     CuPy를 이용한 2차원 convolution.
@@ -100,24 +106,24 @@ def convolution2d_cp(image, kernel, bias=0.0, stride=1, padding=0):
 dx_edge_filter = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]], dtype=np.float32)
 dy_edge_filter = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1]], dtype=np.float32)
 dx_bias = -0.2
-dy_bias = -0.2
+dy_bias = -0.2   #x, y방향 경계선 필터
 
 def run_gpu_accelerations():
-    # 이미지 가상 생성 (테스트용)
-    input_np = np.random.rand(720, 1280).astype(np.float32)
+
+    input_np = np.random.rand(720, 1280).astype(np.float32)   #임의의 테스트 이미지 생성
     
     # 1) 잔상 효과 연산 비교
     weights_np = np.linspace(1.0, 0.05, TRAIL_LENGTH, dtype=np.float32)
     weights_np /= np.sum(weights_np)
     
-    t0 = time.perf_counter()
+    t0 = time.perf_counter()   #cpu 연산 시간 측정
     output_np = motion_trail_np(input_np, weights_np)
     cpu_time = time.perf_counter() - t0
 
-    input_cp = cp.asarray(input_np)
+    input_cp = cp.asarray(input_np)   #gpu 용으로 배열 변환
     weights_cp = cp.asarray(weights_np)
     
-    cp.cuda.Stream.null.synchronize()
+    cp.cuda.Stream.null.synchronize()   #gpu 연산 시간 측정
     t1 = time.perf_counter()
     output_cp = motion_trail_cp(input_cp, weights_cp)
     cp.cuda.Stream.null.synchronize()
@@ -126,10 +132,14 @@ def run_gpu_accelerations():
     print(f"[Motion Trail] CPU Time: {cpu_time:.4f}s, GPU Time: {gpu_time:.4f}s")
 
     # 2) Convolution2D 연산 비교
+    # TODO: 기존에 정의한 convolution2d 함수를 사용하여 convolution을 CPU로 처리
+    # TODO: 변수 재사용 가능
     t0 = time.perf_counter()
     output_dx_np = convolution2d(input_np, dx_edge_filter, bias=dx_bias)
     cpu_conv_time = time.perf_counter() - t0
 
+    # TODO: convolution을 GPU로 처리 (변환-워밍업-처리 파이프라인 구현)
+    # TODO: 변수 재사용 가능
     kernel_dx_cp = cp.asarray(dx_edge_filter)
     cp.cuda.Stream.null.synchronize()
     t1 = time.perf_counter()
@@ -137,6 +147,7 @@ def run_gpu_accelerations():
     cp.cuda.Stream.null.synchronize()
     gpu_conv_time = time.perf_counter() - t1
 
+    # TODO: CPU/GPU 결과 비교 및 출력
     print(f"[Conv2D] CPU Time: {cpu_conv_time:.4f}s, GPU Time: {gpu_conv_time:.4f}s")
 
 
@@ -162,13 +173,13 @@ DATA_ROOT = "src/datasets"
 class SimpleCNN(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(1, 8, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(1, 8, kernel_size=3, padding=1)   #입력은 1개 출력은 8개
         self.relu1 = nn.ReLU()
         self.pool1 = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(8, 16, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(8, 16, kernel_size=3, padding=1)   #8과 16은 무관
         self.relu2 = nn.ReLU()
         self.pool2 = nn.MaxPool2d(2, 2)
-        self.fc = nn.Linear(16 * 7 * 7, 10)
+        self.fc = nn.Linear(16 * 7 * 7, 10)   #최종 10개
 
     def forward(self, x):
         x = self.pool1(self.relu1(self.conv1(x)))
@@ -185,11 +196,11 @@ def train_one_epoch(model, data_loader, criterion, optimizer, device):
 
     for images, labels in data_loader:
         images, labels = images.to(device), labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(images)
-        loss = criterion(outputs, labels)
+        optimizer.zero_grad()   #기울기 초기화
+        outputs = model(images)   
+        loss = criterion(outputs, labels)   
         loss.backward()
-        optimizer.step()
+        optimizer.step()   #가중치 업데이트
 
         total_loss += loss.item() * images.size(0)
         _, preds = torch.max(outputs, 1)
@@ -198,13 +209,13 @@ def train_one_epoch(model, data_loader, criterion, optimizer, device):
 
     return total_loss / sample_count, correct_count / sample_count
 
-def evaluate(model, data_loader, criterion, device):
+def evaluate(model, data_loader, criterion, device):   #모델 평가함
     model.eval()
     total_loss = 0.0
     correct_count = 0
     sample_count = 0
 
-    with torch.no_grad():
+    with torch.no_grad():   #기울기 계산 ㄴㄴ
         for images, labels in data_loader:
             images, labels = images.to(device), labels.to(device)
             outputs = model(images)
@@ -217,12 +228,13 @@ def evaluate(model, data_loader, criterion, device):
 
     return total_loss / sample_count, correct_count / sample_count
 
+# TODO: GPU 기반 MNIST 데이터셋 학습 코드 작성
 def main_gpu(): 
-    random.seed(SEED)
+    random.seed(SEED)   #시드고정
     np.random.seed(SEED)
     torch.manual_seed(SEED)
 
-    transform = transforms.ToTensor()
+    transform = transforms.ToTensor()   #이미지2텐서
 
     train_dataset = datasets.MNIST(
         root=DATA_ROOT,
@@ -238,7 +250,7 @@ def main_gpu():
         download=True,
     )
 
-    train_loader = DataLoader(
+    train_loader = DataLoader(   #배치 단위로
         train_dataset,
         batch_size=BATCH_SIZE,
         shuffle=True,
@@ -252,14 +264,14 @@ def main_gpu():
         num_workers=NUM_WORKERS,
     )
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")   #디바이스 결정
 
     model = SimpleCNN()
     model = model.to(device)
 
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()   #분류 손실 함수
 
-    optimizer = torch.optim.Adam(
+    optimizer = torch.optim.Adam(   #최적화 알고리즘
         model.parameters(),
         lr=LEARNING_RATE,
     )
@@ -271,7 +283,7 @@ def main_gpu():
 
     training_start_time = time.perf_counter()
 
-    for epoch in range(EPOCHS):
+    for epoch in range(EPOCHS):   #에포크만큼 반복
         if device.type == "cuda":
             torch.cuda.synchronize() 
         epoch_start_time = time.perf_counter()
@@ -307,7 +319,7 @@ def main_gpu():
             f"Time: {epoch_time:.2f}s"
         )
 
-    total_training_time = time.perf_counter() - training_start_time
+    total_training_time = time.perf_counter() - training_start_time   #학습 시간 측정
     print(f"Total GPU/CPU training time: {total_training_time:.2f}s")
 
     return total_training_time
@@ -359,11 +371,13 @@ class CIFAR10CNN(nn.Module):
         x = self.fc(x)
         return x
 
+# TODO: CUDA GPU 장치에서 CIFAR-10 데이터셋을 학습과 평가
+# TODO: 각 Epoch 및 전체 학습 시간을 출력
 def train_cifar10_complete():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     train_transform = transforms.Compose([
-        transforms.RandomCrop(size=32, padding=4),
+        transforms.RandomCrop(size=32, padding=4),   #증강
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.ToTensor(),
         transforms.Normalize(mean=CIFAR10_MEAN, std=CIFAR10_STD)
@@ -381,8 +395,8 @@ def train_cifar10_complete():
     test_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)
 
     model = CIFAR10CNN().to(device)
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.AdamW(model.parameters(), lr=0.001)
+    criterion = nn.CrossEntropyLoss()   #최적화1
+    optimizer = optim.AdamW(model.parameters(), lr=0.001)   #최적화2
 
     EPOCHS = 5
     train_loss_history = []
@@ -394,6 +408,7 @@ def train_cifar10_complete():
         torch.cuda.synchronize()
     training_start_time = time.perf_counter()
 
+    # TODO: 5번의 Epoch 동안 학습 및 평가 진행
     for epoch in range(EPOCHS):
         if device.type == "cuda":
             torch.cuda.synchronize()
@@ -407,7 +422,7 @@ def train_cifar10_complete():
         test_loss_history.append(test_loss)
         test_accuracy_history.append(test_accuracy)
 
-        epoch_time = time.perf_counter() - epoch_start_time
+        epoch_time = time.perf_counter() - epoch_start_time  #시간계산
 
         print(
             f"Epoch {epoch + 1}/{EPOCHS} | "
@@ -418,6 +433,7 @@ def train_cifar10_complete():
             f"Time: {epoch_time:.2f}s"
         )
 
+    # TODO: 전체 학습 시간 계산 및 출력
     total_training_time = time.perf_counter() - training_start_time
     print(f"Total GPU CIFAR-10 training time: {total_training_time:.2f}s")
 
@@ -441,10 +457,10 @@ def train_cifar10_complete():
 
 if __name__ == "__main__":
     print("Running GPU Acceleration Tasks...")
-    run_gpu_accelerations()
+    run_gpu_accelerations()   #연산 속도 비교
     
     print("\nRunning MNIST GPU Training...")
     main_gpu()
     
     print("\nRunning CIFAR-10 Training & Saving Model...")
-    train_cifar10_complete()
+    train_cifar10_complete()   #저장
