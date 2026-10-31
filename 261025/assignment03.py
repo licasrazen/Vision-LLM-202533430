@@ -146,10 +146,6 @@ for epoch in range(epochs):
   test_accuracy_history.append(v_acc)
 
 
-# ==========================================
-# 원본 코드 및 TODO 그대로 유지한 구현부
-# ==========================================
-
 # TODO: plt.plot(x축_데이터, y축_데이터, marker="o", label="데이터_이름")을 사용하여 그래프 생성
 plt.figure(figsize=(8, 5))
 
