@@ -21,7 +21,11 @@ Python 환경에서 필요한 라이브러리를 설치한 후 각 파일을 실
 
 **라이브러리 설치**
 ```bash
-pip install numpy cupy-cuda12x torch torchvision matplotlib opencv-python scikit-image
+python -m pip install --upgrade pip setuptools wheel pip uninstall matplotlib-inline pip install "matplotlib-inline<0.2" pip install --no-deps \ scikit-image==0.19.3 \ imageio==2.19.3 \ tifffile==2022.5.4 \ PyWavelets==1.3.0 \ networkx==2.8.8
+
+python -m pip download --no-deps --only-binary=:all: "cupy-cuda12x==12.3.0" -d ~/Downloads
+python -m pip install --no-deps "fastrlock==0.8.3"
+python -m pip install --no-deps --only-binary=:all: ~/Downloads/cupy_cuda12x-12.3.0-*.whl
 ```
 
 **실행**
