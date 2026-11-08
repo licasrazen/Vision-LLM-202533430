@@ -37,17 +37,17 @@ def project_path(path):
 
 YOLO_MODEL_PATH = project_path("shoplifting_wights.pt")
 
-# 웹사이트 예제(05-LLM_and_Gemma.ipynb) 기준 Hugging Face 모델 ID 또는 로컬 GGUF 경로 설정
+# 웹사이트 예제 기준 Hugging Face 모델 ID
 MODEL_ID = "google/gemma-3-4b-it"
 HF_TOKEN = os.getenv("HF_TOKEN")
 
-# 로컬 Llama 모델을 사용할 경우의 경로
+# [로컬 모델 경로 반영] Gemma 4 GGUF 모델 경로 지정
 GEMMA_MODEL_PATH = project_path(
-    "src/models/Gemma4/google_gemma-4-E2B-it-Q4_K_M.gguf"
+    "../src/models/Gemma4/google_gemma-4-E2B-it-Q4_K_M.gguf"
 )
 
-# LLM 구동 방식을 선택합니다 ("api" 또는 "local")
-LLM_MODE = "api"
+# [수정 반영] LLM 구동 방식을 "local"로 변경
+LLM_MODE = "local"
 
 # 카메라 설정
 # USB 웹캠: VIDEO_SOURCE = 0, USE_CSI_CAMERA = False
@@ -99,8 +99,10 @@ RECORD_SAMPLE_RATE = 44100
 WHISPER_SAMPLE_RATE = 16000
 
 AUDIO_FILE = project_path("src/audio/input.wav")
-WHISPER_PATH = project_path("whisper.cpp/build/bin/whisper-cli")
-WHISPER_MODEL = project_path("whisper.cpp/models/ggml-base.bin")
+
+# whisper.cpp 경로 (상위 폴더에 있는 경우)
+WHISPER_PATH = project_path("../whisper.cpp/build/bin/whisper-cli")
+WHISPER_MODEL = project_path("../whisper.cpp/models/ggml-base.bin")
 
 PIPER_MODEL = project_path("src/models/Piper/ko_KR-kss-medium.onnx")
 OUTPUT_FILE = project_path("src/audio/response.wav")
@@ -151,7 +153,7 @@ require_file(PIPER_MODEL, "Piper 음성 모델")
 require_file(FACE_MODEL, "YuNet 얼굴 검출 모델")
 
 if LLM_MODE == "local":
-    require_file(GEMMA_MODEL_PATH, "Gemma 모델")
+    require_file(GEMMA_MODEL_PATH, "Gemma 로컬 모델")
 
 
 # =====================================================
@@ -383,7 +385,7 @@ def draw_status(frame):
 
 
 # =====================================================
-# 7. LLM 모델 초기화 및 호출
+# 7. LLM 모델 초기화 및 호출 (로컬 모드 적용)
 # =====================================================
 
 llm_client = None
