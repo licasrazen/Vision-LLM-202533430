@@ -1,6 +1,10 @@
 # 무인 경비 보안 시스템
 ### YOLO 기반 이상행동 감지 및 로컬 멀티모달 AI 고객 응대 시스템
 
+cd Project02
+source .venv/bin/activate
+python jetson0.py
+
 ## 1. 파일 구조 (필수)
 
 프로젝트의 기본 디렉터리 구조는 다음과 같습니다.
