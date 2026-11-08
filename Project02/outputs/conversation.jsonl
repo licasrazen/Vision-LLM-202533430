@@ -1,0 +1,95 @@
+{"time": "2026-11-08T01:50:41", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.652234673500061, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T01:50:43", "category": "ERROR", "content": "<urlopen error [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다>"}
+{"time": "2026-11-08T02:23:38", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6701744198799133, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:23:42", "category": "AI", "content": "고객님, 혹시 계산하시지 않은 상품이 있으신가요? 제가 확인해 드릴까요?"}
+{"time": "2026-11-08T02:23:42", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T02:27:33", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6263892650604248, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:27:37", "category": "AI", "content": "고객님, 혹시 계산하시지 않은 상품이 있으신가요? 제가 확인해 드릴까요?"}
+{"time": "2026-11-08T02:27:37", "category": "ERROR", "content": "# channels not specified"}
+{"time": "2026-11-08T02:42:49", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6929506063461304, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:42:49", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T02:42:55", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T02:44:30", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6835964918136597, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:44:30", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T02:44:36", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T02:45:44", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.763748824596405, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:45:44", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T02:45:49", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T02:46:50", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.7783564925193787, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T02:46:50", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T02:46:56", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T03:06:44", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.7070832252502441, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:06:44", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:06:50", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T03:17:25", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.44023942947387695, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:17:25", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:17:31", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T03:27:19", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.43064430356025696, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:27:19", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:27:25", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T03:41:42", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.5284566879272461, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:41:42", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:41:53", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T03:51:05", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.4353131353855133, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:51:05", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:51:15", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T03:55:13", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.4754847288131714, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:55:13", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:55:19", "category": "ERROR", "content": "Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]"}
+{"time": "2026-11-08T03:57:49", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.4955523908138275, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T03:57:49", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T03:58:00", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T04:02:22", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.40422388911247253, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T04:02:22", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T04:02:33", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T10:36:05", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.4213167130947113, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T10:36:05", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T10:36:16", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T10:49:55", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.40684932470321655, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T10:49:55", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T10:50:06", "category": "ERROR", "content": "[WinError 2] 지정된 파일을 찾을 수 없습니다"}
+{"time": "2026-11-08T11:04:31", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6023543477058411, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:04:31", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:04:45", "category": "ERROR", "content": "Command '['whisper.cpp\\\\build\\\\bin\\\\Release\\\\whisper-cli.exe', '-m', 'whisper.cpp\\\\models\\\\ggml-base.bin', '-f', 'src/audio/input.wav', '-l', 'ko', '--no-timestamps']' returned non-zero exit status 3."}
+{"time": "2026-11-08T11:08:54", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.5096765756607056, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:08:54", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:09:07", "category": "ERROR", "content": "Whisper 실행 실패"}
+{"time": "2026-11-08T11:17:09", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.5185258388519287, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:17:09", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:18:27", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.41525670886039734, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:18:27", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:23:23", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.4551495313644409, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:23:23", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:23:36", "category": "ERROR", "content": "'NoneType' object has no attribute 'strip'"}
+{"time": "2026-11-08T11:27:16", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.513066291809082, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:27:16", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:27:29", "category": "USER", "content": "계산 전의 상품이 있다는 게 무슨 말인가?"}
+{"time": "2026-11-08T11:27:33", "category": "AI", "content": "네, 계산하시려는 상품이 있는지 여쭤본 것입니다. 혹시 구매하시려는 상품이 있으신가요?"}
+{"time": "2026-11-08T11:27:49", "category": "USER", "content": "아~ 더 빤을 하나 소리"}
+{"time": "2026-11-08T11:27:51", "category": "AI", "content": "네, 더 빤을 하나 구매하시겠어요? 잠시만요, 상품을 확인해 보겠습니다."}
+{"time": "2026-11-08T11:44:48", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.5509039759635925, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:44:48", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:45:02", "category": "USER", "content": "계산 전인 상품이 있냐구요?"}
+{"time": "2026-11-08T11:45:05", "category": "AI", "content": "네, 혹시 구매하시려는 상품이 있으신지 여쭤봐도 될까요?"}
+{"time": "2026-11-08T11:45:17", "category": "USER", "content": "그게 땅을 구매하려고 했는데"}
+{"time": "2026-11-08T11:45:20", "category": "AI", "content": "아, 땅 구매 관련 문의이시군요. 혹시 어떤 종류의 땅에 대해 궁금하신가요? 제가 아는 범위 내에서 도움을 드릴 수 있도록 자세히 말씀해 주시겠어요?"}
+{"time": "2026-11-08T11:45:39", "category": "USER", "content": "아니 빵이야 이거 빵이야 빵 먹는 빵이야"}
+{"time": "2026-11-08T11:45:43", "category": "AI", "content": "아, 죄송합니다. 제가 고객님의 말씀을 잘못 이해했네요. 혹시 저희 매장에서 판매하는 빵에 대해 궁금하신 건가요? 어떤 종류의 빵을 찾고 계신지 말씀해 주시면 확인해 드릴게요."}
+{"time": "2026-11-08T11:47:05", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.41828855872154236, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:47:05", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:47:19", "category": "USER", "content": "아... 계산점인상품이요?"}
+{"time": "2026-11-08T11:47:22", "category": "AI", "content": "네, 계산하실 상품을 말씀해 주시겠어요?"}
+{"time": "2026-11-08T11:47:33", "category": "USER", "content": "오빠의 계산한다고 하는 거예요."}
+{"time": "2026-11-08T11:47:36", "category": "AI", "content": "죄송합니다, 제가 고객님의 말씀을 잘못 이해한 것 같습니다. 혹시 어떤 상품에 대해 확인을 원하시는지 다시 한번 말씀해 주시겠어요?"}
+{"time": "2026-11-08T11:47:53", "category": "USER", "content": "빵을 계속 하려고 합니다 빵"}
+{"time": "2026-11-08T11:47:55", "category": "AI", "content": "네, 빵을 계속 구매하고 싶으시군요. 어떤 종류의 빵을 찾으시나요?"}
+{"time": "2026-11-08T11:48:05", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.524631917476654, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:48:05", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:52:06", "category": "DETECTION", "content": {"class": "shoplifting", "confidence": 0.6797999143600464, "message": "AI detection; human review required"}}
+{"time": "2026-11-08T11:52:06", "category": "AI", "content": "고객님, 혹시 계산 전인 상품이 있으신가요? 확인을 도와드리겠습니다."}
+{"time": "2026-11-08T11:52:19", "category": "USER", "content": "계산 전인 상품이 있냐구요?"}
+{"time": "2026-11-08T11:52:23", "category": "AI", "content": "네, 혹시 구매하시려는 상품이 있으신지 여쭤봐도 될까요?"}
+{"time": "2026-11-08T11:52:35", "category": "USER", "content": "빵을 구매하려고 했었는데요."}
+{"time": "2026-11-08T11:52:37", "category": "AI", "content": "어떤 종류의 빵을 찾으시는지 말씀해주시면 제가 확인해 드릴게요."}
+{"time": "2026-11-08T11:52:50", "category": "USER", "content": "[몇일이 없음]"}
+{"time": "2026-11-08T11:52:52", "category": "AI", "content": "죄송합니다. 혹시 찾으시는 빵 종류를 다시 한번 말씀해주시겠어요?"}
