@@ -24,7 +24,7 @@ load_dotenv()
 
 
 # =====================================================
-# 1. Jetson 기본 설정 (수정 반영)
+# 1. Jetson 기본 설정
 # =====================================================
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -35,8 +35,7 @@ def project_path(path):
     return p if p.is_absolute() else BASE_DIR / p
 
 
-# [수정 반영] 퀀타이즈 적용된 TensorRT 엔진 파일 경로 (기존 .pt 대신 .engine 사용 시)
-YOLO_MODEL_PATH = project_path("shoplifting_wights.engine")
+YOLO_MODEL_PATH = project_path("shoplifting_wights.pt")
 
 # 웹사이트 예제(05-LLM_and_Gemma.ipynb) 기준 Hugging Face 모델 ID 또는 로컬 GGUF 경로 설정
 MODEL_ID = "google/gemma-3-4b-it"
@@ -47,10 +46,12 @@ GEMMA_MODEL_PATH = project_path(
     "src/models/Gemma4/google_gemma-4-E2B-it-Q4_K_M.gguf"
 )
 
-# LLM 구동 방식 선택 ("api" 또는 "local")
+# LLM 구동 방식을 선택합니다 ("api" 또는 "local")
 LLM_MODE = "api"
 
 # 카메라 설정
+# USB 웹캠: VIDEO_SOURCE = 0, USE_CSI_CAMERA = False
+# CSI 카메라: USE_CSI_CAMERA = True
 USE_CSI_CAMERA = False
 VIDEO_SOURCE = 0
 
@@ -68,9 +69,7 @@ TRANSCRIPT_PATH = project_path("outputs/conversation.txt")
 WIDTH = 960
 YOLO_IMAGE_SIZE = 640
 YOLO_DEVICE = 0       # Jetson CUDA GPU
-
-# [수정 반영] 퀀타이즈 모델(.engine) 사용 시 내부 정밀도가 지정되므로 half는 False로 설정
-YOLO_HALF = False     
+YOLO_HALF = True      # FP16 추론
 YOLO_CONF = 0.05
 
 SHOP_CONF = 0.60
@@ -91,19 +90,17 @@ GEMMA_THREADS = 4
 # 오디오 설정
 MIC_DEVICE = None
 
-# [수정 반영] 스피커 필수 지정: 오디오 장치 목록(index) 확인 후 번호 입력 (예: 2)
-# None일 경우 시스템 기본 출력 장치 사용
-SPEAKER_DEVICE = None 
+# [스피커 설정 추가] 오디오 장치 목록에서 확인한 스피커 번호(Index)를 입력하세요. (예: 2)
+# None일 경우 시스템 기본 출력 장치로 소리를 내보냅니다.
+SPEAKER_DEVICE = None
 
 RECORD_SECONDS = 5
 RECORD_SAMPLE_RATE = 44100
 WHISPER_SAMPLE_RATE = 16000
 
 AUDIO_FILE = project_path("src/audio/input.wav")
-
-# [수정 반영] 상위 폴더 구조에 맞춘 Whisper 실행 파일 및 모델 경로
-WHISPER_PATH = project_path("../whisper.cpp/build/bin/whisper-cli")
-WHISPER_MODEL = project_path("../whisper.cpp/models/ggml-base.bin")
+WHISPER_PATH = project_path("whisper.cpp/build/bin/whisper-cli")
+WHISPER_MODEL = project_path("whisper.cpp/models/ggml-base.bin")
 
 PIPER_MODEL = project_path("src/models/Piper/ko_KR-kss-medium.onnx")
 OUTPUT_FILE = project_path("src/audio/response.wav")
@@ -147,7 +144,7 @@ def require_file(path, description):
         )
 
 
-require_file(YOLO_MODEL_PATH, "YOLO 퀀타이즈 모델(.engine)")
+require_file(YOLO_MODEL_PATH, "YOLO 모델")
 require_file(WHISPER_PATH, "Whisper 실행 파일")
 require_file(WHISPER_MODEL, "Whisper 모델")
 require_file(PIPER_MODEL, "Piper 음성 모델")
@@ -244,7 +241,7 @@ def apply_face_mosaic(frame):
 # 5. YOLO 모델
 # =====================================================
 
-print("[초기화] YOLO 퀀타이즈 모델 로드 중...", flush=True)
+print("[초기화] YOLO 모델 로드 중...", flush=True)
 
 model = YOLO(str(YOLO_MODEL_PATH))
 
@@ -609,7 +606,7 @@ def text_to_speech(text):
     if channels > 1:
         audio_data = audio_data.reshape(-1, channels)
 
-    # [수정 반영] 설정된 SPEAKER_DEVICE로 소리 출력
+    # [수정 반영] SPEAKER_DEVICE 변수를 적용하여 지정한 스피커로 사운드 출력
     sd.play(
         audio_data,
         samplerate=sample_rate,
