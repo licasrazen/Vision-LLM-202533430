@@ -1,51 +1,46 @@
 # 무인 경비 보안 시스템
 ### YOLO 기반 이상행동 감지 및 로컬 멀티모달 AI 고객 응대 시스템
 
-cd Project02
-source .venv/bin/activate
-python jetson0.py
+<br>cd Project02
+<br>source .venv/bin/activate
+<br>python jetson0.py
+<br>
+<br>현재 젯슨에서 실행 상태: 카메라, YOLO, Gemma 작동/ 스피커, 마이크 미작동
+
 
 ## 1. 파일 구조 (필수)
 
 프로젝트의 기본 디렉터리 구조는 다음과 같습니다.
 
 ```text
-Project/
+Project02/
 │
-├── main_win.py                    # Windows 실행 코드
-├── main_jetson.py                 # Jetson 실행 코드
-├── shoplifting_wights.pt          # YOLO 학습 모델
+├── README.md                      
+├── best.pt                        
+├── weights.pt                     
+├── shoplifting_wights.pt          # 절도 의심 행동 탐지 모델
+├── yolov8n.pt                     # YOLOv8 기본 모델
 ├── face_detection_yunet_2023mar.onnx  # YuNet 얼굴 검출 모델
 │
-├── src/
-│   ├── models/
-│   │   ├── Gemma4/
-│   │   │   └── google_gemma-4-E2B-it-Q4_K_M.gguf
-│   │   │
-│   │   └── Piper/
-│   │       ├── ko_KR-kss-medium.onnx
-│   │       └── ko_KR-kss-medium.onnx.json
-│   │
-│   └── audio/
-│       ├── input.wav              # STT 입력 음성
-│       └── response.wav           # TTS 출력 음성
+├── main_win.py                    
+├── main_win_modified.py           # Windows 실행 코드
+├── main_jetson.py                 
+├── main_jet.py                    
+├── jetson0.py                     
+├── jetson1.py                     # Jetson 실행 코드 
 │
-├── whisper.cpp/
-│   ├── build/
-│   │   └── bin/
-│   │       └── Release/           # Windows whisper 실행 파일 위치
-│   │           └── whisper-cli.exe
-│   ├── models/
-│   │   └── ggml-base.bin          # Whisper 음성 인식 모델
-│   └── ggml-base.bin              # Windows 코드 경로에 맞춰 배치할 경우
+├── download_gemma.py              # Gemma 모델 다운로드 스크립트
+├── extract_frames.py              # 프레임 추출 스크립트
+├── split_dataset.py               # 데이터셋 분할 스크립트
+├── test_model.py                  # 모델 테스트 코드
+├── train.py                       # 모델 학습 코드
+├── mic_check.py                   # 마이크 테스트 코드
 │
-├── output/
-│   ├── recordings/                # 녹화 영상
-│   └── logs/                      # 대화 기록 및 이벤트 로그
-│
-├── requirements-windows.txt
-└── requirements-jetson.txt
+├── outputs/                       # 출력 결과 및 로그 폴더
+└── 제목을 입력해주세요..pdf        # PDF 발표자료 
 ```
+
+실제 윈도우에서는 main_win_modified.py, 젯슨에서는 jetson1.py만 실행하면 된다.  
 
 ※ 위 구조는 실행 파일과 모델을 한곳에서 관리하기 위한 권장 구조입니다. 실제 코드에서 참조하는 경로와 파일 위치가 일치해야 합니다. 특히 Windows 코드에서 사용하는 Whisper 모델 경로와 Jetson 코드의 모델 경로는 서로 다를 수 있으므로 확인이 필요합니다.
 
@@ -516,16 +511,6 @@ POS 또는 키오스크 결제 데이터를 연동하여 실제 상품 반출 �
 | 고객 대응 | 점주가 직접 전화하거나 방문 | AI 음성 안내 및 대화 지원 |
 | 기록 | CCTV 영상 중심 | 이벤트 메타데이터 및 대화 텍스트 |
 | 확장성 | 별도 장비 및 관제 시스템 의존 | 기존 CCTV와 연동하는 방향으로 확장 |
-
-**사업 모델(BM)**
-
-기존 CCTV 관제 시스템에 연결하는 B2B 월 구독형 SaaS 모델을 목표로 한다.
-
-- 초기 설치: Jetson 등 엣지 디바이스 및 카메라 연동
-- 월 구독: AI 이상행동 분석 및 이벤트 관리 기능
-- 추가 서비스: 다중 매장 통합 관제, POS 연동, 고급 분석 기능
-
-영상 분석을 매장 내부에서 처리하므로 클라우드 AI 추론 비용을 줄일 수 있으며, 기존 CCTV를 활용할 수 있다면 신규 장비 도입 부담도 낮출 수 있다.
 
 **예상 리스크 및 대응 방안**
 
