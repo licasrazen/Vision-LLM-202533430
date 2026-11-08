@@ -101,15 +101,15 @@ WHISPER_SAMPLE_RATE = 16000
 AUDIO_FILE = project_path("src/audio/input.wav")
 
 # whisper.cpp 경로 (상위 폴더에 있는 경우)
-WHISPER_PATH = project_path("../whisper.cpp/build/bin/whisper-cli")
+WHISPER_PATH = project_path("../whisper.cpp/build-cpu/bin/whisper-cli")
 WHISPER_MODEL = project_path("../whisper.cpp/models/ggml-base.bin")
 
-PIPER_MODEL = project_path("src/models/Piper/ko_KR-kss-medium.onnx")
+PIPER_MODEL = project_path("../src/models/Piper/ko_KR-kss-medium.onnx")
 OUTPUT_FILE = project_path("src/audio/response.wav")
 
 # 얼굴 검출 모델
 FACE_MODEL = project_path(
-    "src/models/face_detection_yunet_2023mar.onnx"
+    "face_detection_yunet_2023mar.onnx"
 )
 
 # 한글 폰트 후보

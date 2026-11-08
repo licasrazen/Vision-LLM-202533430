@@ -74,7 +74,7 @@ YOLO_DEVICE = 0       # Jetson CUDA GPU
 YOLO_HALF = True      # FP16 추론
 YOLO_CONF = 0.05
 
-SHOP_CONF = 0.60
+SHOP_CONF = 0.00
 NORMAL_CONF = 0.80
 
 FRAME_WINDOW = 12
@@ -97,15 +97,15 @@ RECORD_SAMPLE_RATE = 44100
 WHISPER_SAMPLE_RATE = 16000
 
 AUDIO_FILE = project_path("src/audio/input.wav")
-WHISPER_PATH = project_path("whisper.cpp/build/bin/whisper-cli")
-WHISPER_MODEL = project_path("whisper.cpp/models/ggml-base.bin")
+WHISPER_PATH = project_path("../whisper.cpp/build-cpu/bin/whisper-cli")
+WHISPER_MODEL = project_path("../whisper.cpp/models/ggml-base.bin")
 
-PIPER_MODEL = project_path("src/models/Piper/ko_KR-kss-medium.onnx")
+PIPER_MODEL = project_path("../src/models/Piper/ko_KR-kss-medium.onnx")
 OUTPUT_FILE = project_path("src/audio/response.wav")
 
 # 얼굴 검출 모델
 FACE_MODEL = project_path(
-    "src/models/face_detection_yunet_2023mar.onnx"
+    "face_detection_yunet_2023mar.onnx"
 )
 
 # 한글 폰트 후보
@@ -698,15 +698,12 @@ def conversation_worker():
 
 def create_csi_pipeline():
     return (
-        f"nvarguscamerasrc ! "
-        f"video/x-raw(memory:NVMM), width=(int){CSI_WIDTH}, "
-        f"height=(int){CSI_HEIGHT}, format=(string)NV12, "
-        f"framerate=(fraction){CSI_FPS}/1 ! "
-        f"nvvidconv ! "
-        f"video/x-raw, format=(string)BGRx ! "
-        f"videoconvert ! "
-        f"video/x-raw, format=(string)BGR ! "
-        f"appsink drop=true max-buffers=1"
+        "v4l2src device=/dev/video0 ! "
+            "image/jpeg,width=640,height=480,framerate=30/1 ! "
+            "jpegdec ! videoconvert ! video/x-raw,format=BGR ! "
+            "queue leaky=downstream max-size-buffers=1 "
+            "max-size-bytes=0 max-size-time=0 ! "
+            "appsink drop=true max-buffers=1 sync=false"
     )
 
 
